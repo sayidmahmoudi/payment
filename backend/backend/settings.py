@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from .envoirments import *
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,7 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-89ufi$15chz5o&js3*qv9#_=!q2*-iju27$(#me76)=67o&p5m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -77,8 +78,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'DB': POSTGRES_DB,
+        'NAME': POSTGRES_NAME,
+        'USER': POSTGRES_USER,
+        'PASSWORD': POSTGRES_PASSWORD,
+        'HOST': POSTGRES_HOST,
+        'PORT': POSTGRES_PORT
     }
 }
 
