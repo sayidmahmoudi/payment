@@ -4,6 +4,22 @@ from django.db import models
 
 
 class Transaction(models.Model):
+    DEPOSIT = "deposit"
+    WITHDRAW = "withdraw"
+    TYPE_CHOICES = (
+        (DEPOSIT, DEPOSIT),
+        (WITHDRAW, WITHDRAW),
+    )
+    type = models.CharField(choices=TYPE_CHOICES, max_length=10, null=False)
+
+    CREATED = "created"
+    DONE = "done"
+    STATE_CHOICES = (
+        (CREATED, CREATED),
+        (DONE, DONE),
+    )
+    state = models.CharField(choices=STATE_CHOICES, max_length=10, null=False)
+
     amount = models.BigIntegerField()
     # todo: add fields if necessary
     pass
