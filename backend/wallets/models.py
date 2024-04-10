@@ -21,15 +21,8 @@ class Transaction(models.Model):
     state = models.CharField(choices=STATE_CHOICES, max_length=10, null=False)
 
     amount = models.BigIntegerField()
-    # todo: add fields if necessary
-    pass
 
 
 class Wallet(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     balance = models.BigIntegerField(default=0)
-
-    def deposit(self, amount: int):
-        # todo: deposit the amount into this wallet
-        pass
-
