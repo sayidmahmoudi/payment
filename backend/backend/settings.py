@@ -89,6 +89,10 @@ DATABASES = {
     }
 }
 
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_CELERY_BROKER}'
+CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_CELERY_BACKEND}'
+CELERY_BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 31540000}
+CELERY_CREATE_MISSING_QUEUES = True
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
