@@ -13,7 +13,7 @@ app.conf.result_expires = 180
 app.conf.beat_schedule = {
     'withdraw': {
         'task': 'wallets.tasks.withdraw',
-        "schedule": timedelta(seconds=1),
+        "schedule": timedelta(seconds=5),
     },
 }
 
