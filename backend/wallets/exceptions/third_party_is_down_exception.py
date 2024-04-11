@@ -1,0 +1,2 @@
+class ThirdPartyIsDownException(Exception):
+    pass
