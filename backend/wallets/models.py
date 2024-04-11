@@ -21,6 +21,8 @@ class Transaction(models.Model):
     state = models.CharField(choices=STATE_CHOICES, max_length=10, null=False)
 
     amount = models.BigIntegerField()
+    wallet = models.ForeignKey('Wallet', on_delete=models.PROTECT, related_name="transactions")
+    execute_time = models.DateTimeField(auto_now_add=True)
 
 
 class Wallet(models.Model):

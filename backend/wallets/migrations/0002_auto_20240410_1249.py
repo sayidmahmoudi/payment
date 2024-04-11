@@ -13,13 +13,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='transaction',
             name='state',
-            field=models.CharField(choices=[('created', 'created'), ('done', 'done')], default='done', max_length=10),
-            preserve_default=False,
+            field=models.CharField(choices=[('created', 'created'), ('done', 'done')], max_length=10),
         ),
         migrations.AddField(
             model_name='transaction',
             name='type',
-            field=models.CharField(choices=[('deposit', 'deposit'), ('withdraw', 'withdraw')], default='deposit', max_length=10),
-            preserve_default=False,
+            field=models.CharField(choices=[('deposit', 'deposit'), ('withdraw', 'withdraw')], max_length=10),
         ),
     ]
