@@ -22,7 +22,7 @@ class Transaction(models.Model):
 
     amount = models.BigIntegerField()
     wallet = models.ForeignKey('Wallet', on_delete=models.PROTECT, related_name="transactions")
-    execute_time = models.DateTimeField(auto_now_add=True)
+    execute_time = models.DateTimeField()
 
 
 class Wallet(models.Model):

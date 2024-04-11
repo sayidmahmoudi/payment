@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='transaction',
             name='execute_time',
-            field=models.DateTimeField(auto_now_add=True),
+            field=models.DateTimeField(),
         ),
         migrations.AddField(
             model_name='transaction',
