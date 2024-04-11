@@ -1,6 +1,8 @@
 import requests
 
+from backend.settings import THIRD_PARTY_URL
+
 
 def request_third_party_deposit():
-    response = requests.post("http://localhost:8010/")
+    response = requests.post(THIRD_PARTY_URL)
     return response.json()

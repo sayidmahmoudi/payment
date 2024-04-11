@@ -1,0 +1,1 @@
+from wallets.infras.third_party_client import ThirdPartyClient
