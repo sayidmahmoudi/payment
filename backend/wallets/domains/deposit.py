@@ -22,5 +22,4 @@ class DepositDomain:
             )
             wallet.balance = F("balance") + amount
             wallet.save()
-            wallet.refresh_from_db()
         return transaction
