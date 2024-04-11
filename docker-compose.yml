@@ -22,6 +22,31 @@ services:
     ports:
       - "5432:5432"
 
+  backend:
+    container_name: backend
+    restart: always
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    command: bash -c "
+      python manage.py migrate &
+      python manage.py runserver 0.0.0.0:8000"
+    environment:
+      REDIS_HOST: "backend_redis"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "backend_postgres"
+      POSTGRES_NAME: "postgres"
+      POSTGRES_HOST: "backend_postgres"
+      POSTGRES_PORT: "5432"
+    ports:
+        - "8000:8000"
+    volumes:
+      - ./backend/:/app
+    depends_on:
+      - backend_redis
+      - backend_postgres
+
   backend_celery:
     container_name: backend_celery
     restart: always
