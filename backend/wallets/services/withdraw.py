@@ -1,7 +1,9 @@
 from rest_framework.exceptions import NotFound
 from datetime import datetime
+from django.db import transaction as django_transaction
 
 from wallets.domains import WithdrawDomain
+from wallets.exceptions import InsufficientBalanceException, ThirdPartyIsDownException
 from wallets.models import Wallet, Transaction
 
 
@@ -16,5 +18,11 @@ class WithdrawService:
             raise NotFound('wallet does not exist')
 
     @classmethod
-    def withdraw(cls, transaction_id: int) -> Transaction:
-        pass
+    def withdraw(cls, transaction_id: int) -> None:
+        transaction = Transaction.objects.get(id=transaction_id)
+        try:
+            with django_transaction.atomic():
+                WithdrawDomain.withdraw(transaction.id)
+                WithdrawDomain.send_withdraw_request(transaction)
+        except (InsufficientBalanceException, ThirdPartyIsDownException):
+            WithdrawDomain.fail_transaction(transaction)

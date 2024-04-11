@@ -3,7 +3,9 @@ from datetime import datetime
 from django.db import transaction as django_transaction
 from django.db.models import F
 
+from wallets.exceptions import InsufficientBalanceException
 from wallets.models import Wallet, Transaction
+from wallets.infras import ThirdPartyClient
 
 
 class WithdrawDomain:
@@ -22,11 +24,25 @@ class WithdrawDomain:
             )
 
     @classmethod
-    def withdraw(cls, amount: int, transaction_id: int) -> Transaction:
+    def fail_transaction(cls, transaction: Transaction) -> None:
+        transaction.state = Transaction.FAILED
+        transaction.save()
+
+    @classmethod
+    def send_withdraw_request(cls, transaction: Transaction) -> None:
+        ThirdPartyClient.withdraw(amount=transaction.amount, wallet_uuid=transaction.wallet.uuid)
+
+    @classmethod
+    def withdraw(cls, transaction_id: int) -> Transaction:
         with django_transaction.atomic():
             transaction = Transaction.objects.get(id=transaction_id)
-            wallet = Wallet.objects.select_for_update(id=transaction.wallet_id)
+            wallet = Wallet.objects.select_for_update().get(id=transaction.wallet_id)
+
+            if wallet.balance < transaction.amount:
+                raise InsufficientBalanceException()
+
             transaction.state = Transaction.DONE
-            wallet.balance = F("balance") - amount
+            transaction.save()
+            wallet.balance = F("balance") - transaction.amount
             wallet.save()
         return transaction
