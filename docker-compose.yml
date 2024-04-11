@@ -71,6 +71,19 @@ services:
       - backend_redis
       - backend_postgres
 
+  third_party:
+    container_name: third_party
+    restart: always
+    build:
+      context: ./third-party/
+      dockerfile: Dockerfile
+    command: bash -c "python app.py"
+    ports:
+        - "8001:8001"
+    volumes:
+      - ./third-party/:/app
+
+
 networks:
   default:
     external: true
