@@ -20,3 +20,5 @@ POSTGRES_DB = getenv("POSTGRES_DB", "backend_postgres")
 POSTGRES_NAME = getenv("POSTGRES_NAME", "postgres")
 POSTGRES_HOST = getenv("POSTGRES_HOST", "localhost")
 POSTGRES_PORT = getenv("POSTGRES_PORT", "5432")
+
+THIRD_PARTY_URL = getenv("THIRD_PARTY_URL", "http://third_party:8010/")
